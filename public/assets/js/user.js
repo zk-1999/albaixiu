@@ -32,3 +32,14 @@ $('#avatar').on('change', function() {
         }
     })
 })
+$.ajax({
+    type: 'get',
+    url: '/users',
+    success: function(result) {
+        var html = template('userTpl', { data: result });
+        $('#userBox').html(html);
+    },
+    error: function(error) {
+        console.log(error)
+    }
+})
