@@ -42,18 +42,36 @@ $('#categoriesBox').on('click', '.edit', function() {
         })
     })
     //分类列表修改数据
-$('#modifyBox').on('submit', '#addCategory', function() {
-    var id = $(this).attr('data-id');
-    $.ajax({
-        type: 'put',
-        url: '/categories/' + id,
-        data: $(this).serialize(),
-        dataType: 'json',
-        success: function(result) {
-            location.reload();
-        },
-        error: function(error) {
-            console.log(error)
-        }
+$('#modifyBox').on('submit', '#modifyCategory', function() {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            type: 'put',
+            url: '/categories/' + id,
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(result) {
+                location.reload();
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
     })
+    //根据id删除分类功能
+$('#categoriesBox').on('click', '.delete', function() {
+    if (confirm('确定要删除吗?')) {
+        var id = $(this).attr('data-id');
+        console.log(id);
+
+        $.ajax({
+            type: 'delete',
+            url: '/categories/' + id,
+            success: function(result) {
+                location.reload();
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+    }
 })
