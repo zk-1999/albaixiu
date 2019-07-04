@@ -6,7 +6,7 @@ $('#modifyForm').on('submit', function() {
         dataType: 'json',
         success: function(result) {
             console.log(result)
-            location.href = '/admin/login.html'
+            location.href = 'login.html'
         },
         error: function(error) {
             console.log(error)

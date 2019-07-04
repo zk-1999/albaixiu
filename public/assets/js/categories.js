@@ -75,3 +75,47 @@ $('#categoriesBox').on('click', '.delete', function() {
         })
     }
 })
+$('#selectAll').on('change', function() {
+    var bool = $(this).prop('checked');
+    $('#categoriesBox').find('.status').prop('checked', bool);
+    if (bool == true) {
+        $('#deleteMany').show();
+    } else {
+        $('#deleteMany').hide();
+    }
+})
+
+$('#categoriesBox').on('change', '.status', function() {
+    if ($('#categoriesBox').find('.status').length == $('#categoriesBox').find('.status').filter(':checked').length) {
+        $('#selectAll').prop('checked', true);
+    } else {
+        $('#selectAll').prop('checked', false);
+    }
+    if ($('#categoriesBox').find('.status').filter(':checked').length >= 2) {
+        $('#deleteMany').show();
+    } else {
+        $('#deleteMany').hide();
+    }
+})
+
+$('#deleteMany').on('click', function() {
+    if (confirm('您真的要删除用户吗')) {
+        var selectAll = $('#categoriesBox').find('.status').filter(':checked');
+        var arr = [];
+        // console.log(selectAll);
+        selectAll.each(function(index, element) {
+            // console.log($(element).attr('data-id'));
+            arr.push($(element).attr('data-id'));
+        })
+        $.ajax({
+            type: 'delete',
+            url: '/categories/' + arr.join('-'),
+            success: function(result) {
+                location.reload();
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        })
+    }
+})
